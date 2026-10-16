@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "Turnstile") (type "KiCad") (uri "${KIPRJMOD}/Turnstile.kicad_sym") (options "") (descr "Turnstile project symbols"))
+)

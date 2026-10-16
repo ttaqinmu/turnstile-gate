@@ -1,0 +1,10 @@
+# Per-user state, lock files, and automatic backups
+*.kicad_prl
+*.lck
+.history/
+*-backups/
+*.kicad_pcb-bak
+*.kicad_sch-bak
+
+# Raster preview; the SVG preview remains a project artifact
+/control-board/control-board-preview.png

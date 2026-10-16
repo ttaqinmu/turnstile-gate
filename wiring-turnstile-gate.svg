@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120" role="img" aria-labelledby="title desc">
+  <title id="title">ESP32 turnstile gate concept wiring diagram</title>
+  <desc id="desc">24 V power, ESP32, QR scanner, IR sensor, limit switches, motor driver, and DC motor for a single 90-degree swing leaf.</desc>
+  <defs>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#172333} .title{font-size:30px;font-weight:700} .sub{font-size:15px;fill:#506174} .h{font-size:19px;font-weight:700} .body{font-size:15px} .tiny{font-size:13px} .net{font-size:14px;font-weight:700} .box{fill:#fff;stroke:#526b83;stroke-width:2;rx:13} .power{fill:none;stroke:#d9534f;stroke-width:4} .ground{fill:none;stroke:#53687b;stroke-width:3} .signal{fill:none;stroke:#16856a;stroke-width:3} .safety{fill:none;stroke:#c17c16;stroke-width:3;stroke-dasharray:8 5} .node{fill:#fff;stroke:#526b83;stroke-width:2}
+    </style>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#d9534f"/></marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#16856a"/></marker>
+  </defs>
+  <rect width="1600" height="1120" fill="#f5f8fb"/>
+  <text x="60" y="62" class="title">Ticket turnstile wiring • ESP32 • one leaf / 90°</text>
+  <text x="60" y="88" class="sub">24 V DC concept — use the README.md pin table for terminal wiring</text>
+
+  <rect x="60" y="145" width="230" height="122" class="box"/>
+  <text x="80" y="179" class="h">PS1 • 24 V DC PSU</text><text x="80" y="207" class="body">+24 V / 0 V</text><text x="80" y="234" class="tiny">size for motor current</text>
+  <rect x="365" y="137" width="244" height="138" class="box"/>
+  <text x="385" y="171" class="h">F1 + K1</text><text x="385" y="201" class="body">motor fuse +</text><text x="385" y="223" class="body">NO relay contact</text><text x="385" y="250" class="tiny">K1 opens on E-stop</text>
+  <rect x="695" y="135" width="315" height="175" class="box"/>
+  <text x="718" y="169" class="h">U4 • 24 V H-bridge</text><text x="718" y="198" class="body">VIN / GND → OUTA / OUTB</text><text x="718" y="225" class="body">PWM, DIR, FLT</text><text x="718" y="253" class="tiny">example: Pololu G2 24v30 CS</text><text x="718" y="279" class="tiny">bulk capacitor near input</text>
+  <rect x="1110" y="153" width="275" height="125" class="box"/>
+  <text x="1134" y="188" class="h">M1 • 24 V gearmotor</text><text x="1134" y="217" class="body">shaft + gate leaf</text><text x="1134" y="246" class="tiny">mechanical stops: 0° / 90°</text>
+  <path d="M290 181 H365" class="power" marker-end="url(#arrowRed)"/><text x="307" y="166" class="net">+24 V</text>
+  <path d="M609 181 H695" class="power" marker-end="url(#arrowRed)"/><text x="633" y="166" class="net">VIN</text>
+  <path d="M1010 207 H1110" class="power" marker-end="url(#arrowRed)"/><text x="1027" y="191" class="net">OUTA/B</text>
+  <path d="M290 244 H337 V334 H748 V310" class="ground"/><text x="345" y="324" class="net">0 V / GND</text>
+
+  <rect x="60" y="356" width="295" height="105" class="box"/>
+  <text x="81" y="390" class="h">S0 • E-stop NC</text><text x="81" y="418" class="body">in series with K1 coil (via F2)</text><text x="81" y="443" class="tiny">flyback diode across coil</text>
+  <path d="M182 267 V356" class="safety"/><path d="M355 408 H481 V275" class="safety"/><text x="376" y="394" class="tiny">controls K1</text>
+
+  <rect x="60" y="524" width="235" height="110" class="box"/>
+  <text x="81" y="559" class="h">F2 + U1</text><text x="81" y="587" class="body">fuse + buck</text><text x="81" y="611" class="body">24 V → 5 V</text>
+  <path d="M160 267 V524" class="power"/><text x="170" y="504" class="net">+24 V control</text>
+  <rect x="470" y="482" width="325" height="210" class="box"/>
+  <text x="492" y="519" class="h">U2 • ESP32-DevKitC V4</text>
+  <text x="492" y="550" class="body">5V / GND • 3V3 output</text>
+  <text x="492" y="582" class="body">UART RX16 / TX17</text>
+  <text x="492" y="611" class="body">PWM25 / DIR26 / FLT27</text>
+  <text x="492" y="640" class="body">IR32 / 0°:33 / 90°:34</text>
+  <text x="492" y="667" class="tiny">external 10 kΩ pull-ups on NC inputs</text>
+  <path d="M295 570 H470" class="power" marker-end="url(#arrowRed)"/><text x="354" y="553" class="net">5 V</text>
+  <path d="M295 613 H435 V668 H470" class="ground"/><text x="352" y="650" class="net">GND</text>
+  <path d="M795 552 H904 V310" class="signal" marker-end="url(#arrowGreen)"/><text x="813" y="536" class="net">GPIO25 → PWM</text>
+  <path d="M795 586 H940 V310" class="signal" marker-end="url(#arrowGreen)"/><text x="818" y="611" class="net">GPIO26 → DIR</text>
+  <path d="M976 310 V453 H795" class="signal" marker-end="url(#arrowGreen)"/><text x="992" y="418" class="net">FLT → GPIO27</text>
+
+  <rect x="65" y="773" width="337" height="158" class="box"/>
+  <text x="88" y="809" class="h">U3 • QR scanner SEN0486</text>
+  <text x="88" y="839" class="body">VCC 3V3 / GND</text>
+  <text x="88" y="868" class="body">SDA/TX → ESP32 RX16</text>
+  <text x="88" y="897" class="body">SCL/RX ← ESP32 TX17</text>
+  <path d="M532 692 V738 H290 V773" class="signal" marker-end="url(#arrowGreen)"/><text x="377" y="726" class="net">3V3 + UART</text>
+
+  <rect x="478" y="773" width="370" height="158" class="box"/>
+  <text x="500" y="809" class="h">B1 • IR through-beam</text>
+  <text x="500" y="839" class="body">transmitter + receiver: 24 V</text>
+  <text x="500" y="868" class="body">relay COM/NO → U5 optocoupler</text>
+  <text x="500" y="897" class="body">U5 output → GPIO32 + pull-up 10 kΩ</text>
+  <path d="M641 692 V773" class="signal" marker-end="url(#arrowGreen)"/><text x="652" y="752" class="net">GPIO32</text>
+
+  <rect x="926" y="773" width="515" height="158" class="box"/>
+  <text x="949" y="809" class="h">S1 / S2 • limit switch NC</text>
+  <text x="949" y="839" class="body">both COM terminals → GND</text>
+  <text x="949" y="868" class="body">S1 NC (at 0°) → GPIO33 + 10 kΩ pull-up</text>
+  <text x="949" y="897" class="body">S2 NC (at 90°) → GPIO34 + 10 kΩ pull-up</text>
+  <path d="M767 692 V720 H1173 V773" class="signal" marker-end="url(#arrowGreen)"/><text x="989" y="709" class="net">GPIO33 / GPIO34</text>
+
+  <rect x="65" y="978" width="1376" height="88" fill="#fff4df" stroke="#d6a64b" stroke-width="1.5" rx="11"/>
+  <text x="88" y="1008" class="h">Safe-state logic</text>
+  <text x="88" y="1036" class="body">Blocked beam, broken sensor cable, driver fault, or bad limit → do not close. If IR blocks during closing → stop and reopen.</text>
+  <text x="88" y="1057" class="tiny">Red: power • green: signals • gray: ground • dashed yellow: E-stop. See README.md for terminal details.</text>
+</svg>

@@ -1,0 +1,13 @@
+# Local editor, Python, and OS files
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Blender backup saves; keep the main .blend file
+*.blend[0-9]*
